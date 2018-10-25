@@ -1,0 +1,140 @@
+form {
+    width: 500px;
+    margin: 50px auto;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+form input {
+    width: 50px;
+}
+
+.btn_box {
+    margin: 0 auto;
+    width: 500px;
+    text-align: right;
+}
+
+.box {
+    width: 1000px;
+    height: 600px;
+    margin: 20px auto;
+    border: 1px solid #000;
+    position: relative;
+}
+
+.create_box {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.082);
+    top: 10px;
+    left: 10px;
+}
+
+.header {
+    width: 100%;
+    height: 30px;
+    background: rgba(38, 197, 171, 0.856);
+}
+
+.header_box {
+    width: 30%;
+    float: right;
+}
+
+.header_box span {
+    float: left;
+    font-size: 1.1em;
+    width: 33%;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.max {
+    display: none;
+}
+
+.header_box span:hover {
+    background: rgb(0, 47, 255);
+    color: #fff;
+}
+
+.content {
+    width: 100%;
+}
+
+.footer {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    background: rgb(255, 196, 0);
+    bottom: 0;
+}
+
+.left,
+.right,
+.top,
+.bottom {
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    cursor: s-resize;
+}
+
+.left {
+    left: 0;
+    top: 0;
+    cursor: e-resize;
+}
+
+.right {
+    top: 0;
+    right: 0;
+    cursor: e-resize;
+}
+
+.top {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+}
+
+.bottom {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+}
+
+.u-l,
+.u-r,
+.b-l,
+.b-r {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    cursor: se-resize;
+}
+
+.u-l {
+    top: 0;
+    left: 0;
+}
+
+.u-r {
+    top: 0;
+    right: 0;
+    cursor: sw-resize;
+}
+
+.b-l {
+    left: 0;
+    bottom: 0;
+    cursor: sw-resize;
+}
+
+.b-r {
+    right: 0;
+    bottom: 0;
+}
