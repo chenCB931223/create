@@ -101,14 +101,13 @@ class Trends {
 
     }
     move() {
-        let $box_w = $('.box').width(),
-            $box_h = $('.box').height(),
-            create_box = $('.create_box');
-        let create_box_w = create_box.width(),
-            create_box_h = create_box.height();
-
         const active = function(e) {
-            e.stopPropagation();
+            let $box_w = $('.box').width(),
+                $box_h = $('.box').height(),
+                create_box = $('.create_box');
+            let create_box_w = create_box.width(),
+                create_box_h = create_box.height();
+                e.stopPropagation();
             let ox = e.clientX,
                 oy = e.clientY;
             let create_box_left = create_box.position().left,
