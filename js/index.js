@@ -6,6 +6,7 @@ class Trends {
     constructor(parent) {
         this.box = $(parent);
         this.grounp = [];
+        this.index = 0;
         this.addEvent()
     }
     create() {
@@ -49,6 +50,7 @@ class Trends {
         this.create_box.each(function() {
             _this.grounp.push(this);
 
+            _this.getTheIndex(this);
             _this.move(this);
             //四边
             _this.drawing(this, $(this).find('.top'), false, true, false, true);
@@ -61,6 +63,13 @@ class Trends {
             _this.drawing(this, $(this).find('.u-l'), true, true, true, true);
             _this.drawing(this, $(this).find('.b-l'), true, false, true, true);
 
+        });
+    }
+    getTheIndex(box) {
+        let _this = this;
+        $(box).on('click', function() {
+            _this.index++;
+            $(box).attr('z-index', _this.index);
         });
     }
     getSize() {
@@ -78,31 +87,43 @@ class Trends {
 
         casket.find('.text').html($('#text').val());
         this.create_box.find('.big').on('click', function() {
+
             $(this).closest(create_box).css({
                 'width': _this.box.width() + 'px',
                 'height': _this.box.height() + 'px',
                 'top': '0',
                 'left': '0'
             });
+
             $(this).siblings('.max').show();
             $(this).hide();
         });
         this.create_box.find('.max').on('click', function() {
             $('.max').hide();
             $('.big').show();
+
             $(this).closest(create_box).css({
                 'width': width + 'px',
                 'height': height + 'px',
                 'top': '10px',
-                'left': '10px'
+                'left': '10px',
             });
         })
+        let count = 0;
+
         this.create_box.find('.small').on('click', function() {
+            count++;
+            if (count % 2 === 0) {
+                $(this).closest(create_box).css({
+                    'height': _this.inhere_h
+                })
+            } else {
+                _this.inhere_h = $(this).closest(create_box).height();
+                $(this).closest(create_box).css({
+                    'height': $('.header').height()
+                })
 
-            $('.content').slideToggle(200);
-
-            create_box.css('height', $('.header').height());
-
+            }
         });
 
         this.create_box.find('.clear').on('click', function() {
