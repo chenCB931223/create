@@ -1,13 +1,33 @@
 $(function() {
-    var trends = new Trends($('.box'));
+    let create_width = $('#width').val(),
+        create_height = $('#height').val(),
+        create_text = $('#text').val();
+    let obj = {
+        'width': create_width,
+        'height': create_height,
+        'text': create_text,
+    };
+    let box = $('.box');
+    $('#btn').on('click', () => {
+        trends = new Trends(box, obj);
+    });
 })
 
 class Trends {
-    constructor(parent) {
+    constructor(parent, depict) {
+        this.width = depict.width;
+        this.height = depict.height;
+        this.text = depict.text;
         this.box = $(parent);
         this.grounp = [];
         this.index = 0;
-        this.addEvent()
+        this.init()
+    }
+    init() {
+        this.create();
+        this.getGrounp();
+        this.getSize();
+        this.clear();
     }
     create() {
         const strDom = `<div class="create_box">
@@ -32,16 +52,7 @@ class Trends {
             <div class="b-r"></div>
             </div>`;
         this.box.append(strDom);
-    }
-    addEvent() {
-        const _this = this;
-        $('body').on('click', '#btn', function() {
-            _this.create();
-
-            _this.getGrounp();
-            _this.getSize();
-
-        });
+        console.log(this);
     }
     getGrounp() {
         const _this = this;
@@ -52,45 +63,84 @@ class Trends {
 
             _this.getTheIndex(this);
             _this.move(this);
-            //四边
-            _this.drawing(this, $(this).find('.top'), false, true, false, true);
-            _this.drawing(this, $(this).find('.left'), true, false, true, false);
-            _this.drawing(this, $(this).find('.bottom'), false, false, false, true);
-            _this.drawing(this, $(this).find('.right'), false, false, true, false);
+            //四边  
+            _this.drawing(this, $(this).find('.top'), {
+                isleft: false,
+                istop: true,
+                isright: false,
+                isbottom: true,
+            });
+            _this.drawing(this, $(this).find('.left'), {
+                isleft: true,
+                istop: false,
+                isright: true,
+                isbottom: false,
+            });
+            _this.drawing(this, $(this).find('.bottom'), {
+                isleft: false,
+                istop: false,
+                isright: false,
+                isbottom: true,
+            });
+            _this.drawing(this, $(this).find('.right'), {
+                isleft: false,
+                istop: false,
+                isright: true,
+                isbottom: false,
+            });
             //四角
-            _this.drawing(this, $(this).find('.b-r'), false, false, true, true);
-            _this.drawing(this, $(this).find('.u-r'), false, true, true, true);
-            _this.drawing(this, $(this).find('.u-l'), true, true, true, true);
-            _this.drawing(this, $(this).find('.b-l'), true, false, true, true);
+            _this.drawing(this, $(this).find('.b-r'), {
+                isleft: false,
+                istop: false,
+                isright: true,
+                isbottom: true,
+            });
+            _this.drawing(this, $(this).find('.u-r'), {
+                isleft: false,
+                istop: true,
+                isright: true,
+                isbottom: true,
+            });
+            _this.drawing(this, $(this).find('.u-l'), {
+                isleft: true,
+                istop: true,
+                isright: true,
+                isbottom: true,
+            });
+            _this.drawing(this, $(this).find('.b-l'), {
+                isleft: true,
+                istop: false,
+                isright: true,
+                isbottom: true,
+            });
 
         });
     }
     getTheIndex(box) {
         let _this = this;
-        $(box).on('click', function() {
+        $(box).on('mousedown', function() {
             _this.index++;
-            $(box).attr('z-index', _this.index);
+            $(box).css('z-index', _this.index);
         });
     }
     getSize() {
         const _this = this;
         let len = this.grounp.length;
-        const width = $('#width').val(),
-            height = $('#height').val(),
-            create_box = $('.create_box');
+        const create_box = $('.create_box');
         const casket = $(this.grounp[len - 1]);
 
         casket.css({
-            'width': width + 'px',
-            'height': height + 'px'
+            'width': this.width + 'px',
+            'height': this.height + 'px'
         });
-
-        casket.find('.text').html($('#text').val());
+        casket.find('.text').html(this.text);
         this.create_box.find('.big').on('click', function() {
-
+            let max_l = $(this).closest(create_box).width(),
+                max_t = $(this).closest(create_box).height();
+            console.log(max_l, max_t);
             $(this).closest(create_box).css({
-                'width': _this.box.width() + 'px',
-                'height': _this.box.height() + 'px',
+                'width': _this.box.width() - 10 + 'px',
+                'height': _this.box.height() - 10 + 'px',
                 'top': '0',
                 'left': '0'
             });
@@ -126,18 +176,14 @@ class Trends {
             }
         });
 
-        this.create_box.find('.clear').on('click', function() {
-            $(this).closest(create_box).remove();
-        });
-
     }
     move(parent) {
         const active = function(e) {
             e.stopPropagation();
             const $box_w = $('.box').width(),
                 $box_h = $('.box').height();
-            let create_box_w = $(parent).width(),
-                create_box_h = $(parent).height();
+            let create_box_w = $(parent).width() + 10,
+                create_box_h = $(parent).height() + 10;
 
             let ox = e.clientX,
                 oy = e.clientY;
@@ -152,8 +198,8 @@ class Trends {
                 to_t = Math.min($box_h - create_box_h, Math.max(0, to_t));
                 to_l = Math.min($box_w - create_box_w, Math.max(0, to_l));
                 $(parent).css({
-                    'left': to_l,
-                    'top': to_t
+                    'left': to_l + 'px',
+                    'top': to_t + 'px',
                 })
 
             }
@@ -164,10 +210,13 @@ class Trends {
         }
         $(parent).find('.header').on('mousedown', active);
     }
-    drawing(parent, name, isleft, istop, isright, isbottom) {
-
-        const minW = 200,
-            minh = 200;
+    drawing(parent, name, obj) {
+        let isleft = obj.isleft,
+            isright = obj.isright,
+            istop = obj.istop,
+            isbottom = obj.isbottom;
+        const minW = 300,
+            minh = 300;
         const _this = this;
         let disX = 0,
             disY = 0;
@@ -181,43 +230,43 @@ class Trends {
 
             disX = e.clientX - $(this).position().left;
             disY = e.clientY - $(this).position().top;
-
             const handle = function(e) {
                 let it = e.clientY - disY,
                     il = e.clientX - disX;
-                let maxw = box_w - $(parent).position().left - 2,
-                    maxh = box_h - $(parent).position().top - 2;
-                let iw = isleft ? create_w - il : $(name).width() + il;
-                let ih = istop ? create_h - it : $(name).height() + it;
+                let maxr = box_w - $(parent).position().left - 10,
+                    maxt = box_h - $(parent).position().top - 10;
 
-                if (isleft) {
-                    $(parent).css('left', create_left + il);
-                }
-                if (istop) {
-                    $(parent).css('top', it + create_top + 'px');
-                }
+                let range_right = Math.max(minW, Math.min(maxr, il)),
+                    range_bottom = Math.max(minh, Math.min(maxt, it)),
+                    range_left = Math.max(minW, Math.min((create_left + create_w), (create_w - il))),
+                    range_top = Math.max(minh, Math.min((create_top + create_h), (create_h - it))),
+                    create_l = Math.max(0, Math.min(create_left, create_left + il)),
+                    create_t = Math.max(0, Math.min(create_top, create_top + it));
 
-                if (iw < minW) {
-                    iw = minW;
-                } else if (iw > maxw) {
-                    iw = maxw
-                }
-                if (ih < minh) {
-                    ih = minh;
-                } else if (ih > maxh) {
-                    ih = maxh;
-                }
                 if (isright) {
-                    $(parent).css('width', iw + 'px');
+                    $(parent).css({
+                        'left': create_left,
+                        'width': range_right,
+                    });
                 }
                 if (isbottom) {
-                    $(parent).css('height', ih + 'px');
+                    $(parent).css({
+                        'top': create_top,
+                        'height': range_bottom,
+                    })
                 }
-                if ((isleft && iw == minW) || (istop && ih == minh)) {
-                    $(document).off('mousemove', handle);
-                    $(document).off('mousedown', active);
-
-                };
+                if (isleft) {
+                    $(parent).css({
+                        'left': create_l,
+                        'width': range_left,
+                    })
+                }
+                if (istop) {
+                    $(parent).css({
+                        'top': create_t,
+                        'height': range_top,
+                    })
+                }
             };
 
             $(document).on('mousemove', handle);
@@ -226,6 +275,10 @@ class Trends {
             });
         };
         $(name).on('mousedown', active);
-
+    }
+    clear() {
+        this.create_box.find('.clear').on('click', function() {
+            $(this).closest($('.create_box')).remove();
+        });
     }
 }
