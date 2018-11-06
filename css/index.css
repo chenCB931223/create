@@ -25,9 +25,10 @@ form input {
 
 .create_box {
     position: absolute;
-    border: 2px solid rgba(0, 0, 0, 0.082);
-    top: 10px;
-    left: 10px;
+    border: 5px solid rgba(38, 197, 171, 0.856);
+    border-radius: 5px;
+    top: 0px;
+    left: 0px;
 }
 
 .header {
@@ -40,6 +41,7 @@ form input {
     width: 100px;
     height: 30px;
     float: right;
+    cursor: move;
 }
 
 .header_box a {
@@ -84,13 +86,12 @@ form input {
     position: absolute;
     width: 10px;
     height: 100%;
-    cursor: s-resize;
 }
 
 .left {
-    left: -5px;
-    top: 0;
-    cursor: e-resize;
+    left: 0px;
+    top: -5px;
+    cursor: w-resize;
 }
 
 .right {
@@ -100,10 +101,11 @@ form input {
 }
 
 .top {
-    top: -5px;
-    left: 0;
+    top: 0px;
+    left: -5px;
     width: 100%;
     height: 10px;
+    cursor: n-resize;
 }
 
 .bottom {
@@ -111,6 +113,7 @@ form input {
     left: 0;
     width: 100%;
     height: 10px;
+    cursor: s-resize;
 }
 
 .u-l,
@@ -120,18 +123,18 @@ form input {
     position: absolute;
     width: 10px;
     height: 10px;
-    cursor: se-resize;
 }
 
 .u-l {
     top: 0;
     left: 0;
+    cursor: nw-resize;
 }
 
 .u-r {
     top: 0;
     right: 0;
-    cursor: sw-resize;
+    cursor: ne-resize;
 }
 
 .b-l {
@@ -143,4 +146,5 @@ form input {
 .b-r {
     right: 0;
     bottom: 0;
+    cursor: se-resize;
 }
