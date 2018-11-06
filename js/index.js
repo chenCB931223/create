@@ -240,8 +240,8 @@ class Trends {
                     range_bottom = Math.max(minh, Math.min(maxt, it)),
                     range_left = Math.max(minW, Math.min((create_left + create_w), (create_w - il))),
                     range_top = Math.max(minh, Math.min((create_top + create_h), (create_h - it))),
-                    create_l = Math.max(0, Math.min(create_left, create_left + il)),
-                    create_t = Math.max(0, Math.min(create_top, create_top + it));
+                    create_l = Math.max(0, Math.min(create_left + create_w - minW, create_left + il)),
+                    create_t = Math.max(0, Math.min(create_top + create_h - minh, create_top + it));
 
                 if (isright) {
                     $(parent).css({
