@@ -85,7 +85,9 @@ form input {
     background: #fff;
     color: #000;
 }
-
+.content p {
+    word-break: break-all;
+}
 .left,
 .right,
 .top,
