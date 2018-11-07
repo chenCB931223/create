@@ -32,16 +32,18 @@ form input {
 }
 
 .header {
+    position: absolute;
     width: 100%;
     height: 30px;
     background: rgba(38, 197, 171, 0.856);
+    box-shadow: 0 0 0 2px rgba(38, 197, 171, 0.856);
+    cursor: move;
 }
 
 .header_box {
     width: 100px;
     height: 30px;
     float: right;
-    cursor: move;
 }
 
 .header_box a {
@@ -54,7 +56,7 @@ form input {
 }
 
 .header_box .big {
-    background: url('../images/boost.png') no-repeat 8px 5px;
+    background: url('../images/boost.png') no-repeat 8px 6px;
 }
 
 .header_box .max {
@@ -77,6 +79,11 @@ form input {
 
 .content {
     width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    box-sizing: border-box;
+    background: #fff;
+    color: #000;
 }
 
 .left,
@@ -89,8 +96,8 @@ form input {
 }
 
 .left {
-    left: 0px;
-    top: -5px;
+    left: -5px;
+    top: 0px;
     cursor: w-resize;
 }
 
@@ -101,8 +108,8 @@ form input {
 }
 
 .top {
-    top: 0px;
-    left: -5px;
+    top: -5px;
+    left: 0px;
     width: 100%;
     height: 10px;
     cursor: n-resize;
