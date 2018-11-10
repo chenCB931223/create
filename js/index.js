@@ -136,11 +136,23 @@ class Trends {
                     });
                     flag = false;
                 } else {
-                    this.create_box.stop().animate({
-                        'height': this.inhere_h
-                    }, 1000, () => {
-                        content_text.show();
-                    });
+                    let create_h = this.create_box.position().top;
+                    let addH = create_h + this.inhere_h,
+                        max_h = this.box.height() - this.create_box_b;
+                    if (addH > max_h) {
+                        this.create_box.stop().animate({
+                            'height': max_h - create_h + 'px'
+                        }, 1000, () => {
+                            content_text.show();
+                        })
+                    } else {
+                        this.create_box.stop().animate({
+                            'height': this.inhere_h
+                        }, 1000, () => {
+                            content_text.show();
+                        });
+                    }
+
                     flag = true;
                 }
             });
